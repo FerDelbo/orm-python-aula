@@ -2,6 +2,7 @@ from mysql.connector import (connection)
 from mysql.connector import errorcode
 import os
 from dotenv import load_dotenv
+from orm import Aluno
 
 load_dotenv()
 senha = os.getenv('SENHA_SQL')
@@ -22,28 +23,32 @@ except mysql.connector.Error as erro:
     else:
         print(erro)
 
-comando = bd_conexao.cursor()
-# EXIBIR ALUNOS
-select = comando.execute("SELECT * FROM ALUNOS")
-resultado = comando.fetchall()
-for linha in resultado:
-    print(linha)
+vinicius = Aluno('vincius', '1 TEC')
+print(vinicius.get())
+vinicius.salvar()
+vinicius.close()
+# comando = bd_conexao.cursor()
+# # EXIBIR ALUNOS
+# select = comando.execute("SELECT * FROM ALUNOS")
+# resultado = comando.fetchall()
+# for linha in resultado:
+#     print(linha)
 
-## INSERIR ALUNO
-sql_insert = "INSERT INTO ALUNOS (nome, ano) VALUES (%s, %s)"
-valores1 = ('Caio', '3 TEC')
-valores2 = ('Leonardo', '2 TEC')
+# ## INSERIR ALUNO
+# sql_insert = "INSERT INTO ALUNOS (nome, ano) VALUES (%s, %s)"
+# valores1 = ('Caio', '3 TEC')
+# valores2 = ('Leonardo', '2 TEC')
 
-comando.execute(sql_insert, valores1)
-comando.execute(sql_insert, valores2)
+# comando.execute(sql_insert, valores1)
+# comando.execute(sql_insert, valores2)
 
-print("\n==TESTE INSERT==\n")
-select = comando.execute("SELECT * FROM ALUNOS")
-resultado = comando.fetchall()
-for linha in resultado:
-    print(linha)
+# print("\n==TESTE INSERT==\n")
+# select = comando.execute("SELECT * FROM ALUNOS")
+# resultado = comando.fetchall()
+# for linha in resultado:
+#     print(linha)
 
-## SEMPRE FECHAR A CONEXÃO
-comando.close()
-bd_conexao.commit()
-bd_conexao.close()
+# ## SEMPRE FECHAR A CONEXÃO
+# comando.close()
+# bd_conexao.commit()
+# bd_conexao.close()
